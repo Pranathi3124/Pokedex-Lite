@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
-  const host = request.headers.get('host') || 'localhost:3000';
-  const protocol = host.includes('localhost') ? 'http' : 'https';
-  const redirectUri = `${protocol}://${host}/api/auth/callback`;
+  const redirectUri = `${request.nextUrl.origin}/api/auth/callback`;
   
   const clientId = process.env.GOOGLE_CLIENT_ID;
   
