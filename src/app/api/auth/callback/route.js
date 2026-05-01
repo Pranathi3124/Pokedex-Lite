@@ -15,7 +15,10 @@ export async function GET(request) {
 
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const redirectUri = 'http://localhost:3000/api/auth/callback';
+  
+  const host = request.headers.get('host') || 'localhost:3000';
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  const redirectUri = `${protocol}://${host}/api/auth/callback`;
 
   try {
     // 1. Exchange code for tokens

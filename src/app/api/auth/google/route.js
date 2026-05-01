@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request) {
+  const host = request.headers.get('host') || 'localhost:3000';
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  const redirectUri = `${protocol}://${host}/api/auth/callback`;
+  
   const clientId = process.env.GOOGLE_CLIENT_ID;
-  const redirectUri = 'http://localhost:3000/api/auth/callback';
   
   if (!clientId || clientId === 'YOUR_GOOGLE_CLIENT_ID') {
     return NextResponse.json({ error: 'Missing GOOGLE_CLIENT_ID in .env.local' }, { status: 500 });
